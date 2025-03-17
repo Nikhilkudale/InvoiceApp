@@ -1,5 +1,5 @@
 package com.example.demo;
 
-public class Testinginvoice {
+public class NikhilInvoice {
 
 }
