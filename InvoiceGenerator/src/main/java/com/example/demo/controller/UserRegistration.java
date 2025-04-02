@@ -16,23 +16,23 @@ public class UserRegistration {
 	@Autowired
 	UserService userservice;
 	
-//	@GetMapping("/register")
-//	public String showregisrtation(Model model)
-//	
-//	{
-//        model.addAttribute("user", new User());
-//		return "UserRegistration";
-//	}
 	@GetMapping("/register")
-	public String showregisrtation() {
-	    return "UserRegistration";
+	public String showregisrtation(Model model)
+	
+	{
+        model.addAttribute("user", new User());
+		return "UserRegistration";
 	}
+//	@GetMapping("/register")
+//	public String showregisrtation() {
+//	    return "UserRegistration";
+//	}
 	@PostMapping("/post")
     public String registerUser(@ModelAttribute User user, Model model) {
         if (userservice.userExistsByEmail(user.getEmail())) {
-            model.addAttribute("message", "Email already exists!");
+            model.addAttribute("errorMessage", "Email already exists!");
             System.out.println("User already exist");
-            return "ErrorReg";
+            return "UserRegistration";
         }
         userservice.adduser(user);
         model.addAttribute("message", "Registration successful!");
@@ -53,10 +53,10 @@ public class UserRegistration {
 	    User existingUser = userservice.findByEmail(user.getEmail());
 	    if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
 	        session.setAttribute("userEmail", existingUser.getEmail());
-	        model.addAttribute("message", "Login successful!");
+//	        model.addAttribute("errorMessage", "Login successful!");
 	        return "redirect:/GetInvoice";
 	    } else {
-	        model.addAttribute("error", "Invalid email or password");
+	        model.addAttribute("errorMessage", "Invalid email or password");
 	        return "UserRegistration";
 	    }
 	}
